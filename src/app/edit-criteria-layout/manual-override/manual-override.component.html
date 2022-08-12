@@ -1,0 +1,152 @@
+
+<div class="p-1 pb-5 scroll_enabled" style="background-color: #303030; min-height:100vh; overflow-x:hidden;">
+
+  <div class="row ms-2 me-2 pt-4 pb-4 mb-5"style="border-bottom: solid 1px lightblue;">
+    <div class="col">
+      <button class=" btn btn-sm btn-outline-secondary ms-2" style="border:none; color:lightblue;" routerLink="/Satellite-Details">
+        <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+      </button>
+    </div>
+    <div class="col text-end">
+      <h4 class="fw-bold me-3" style="color:lightblue;">
+        <span class="ps-3 pe-3"> Manual Override </span>
+      </h4>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-3 text-white">
+        <p>
+          <span class="fw-bolder" style="color:#dc3545;">Warning: Be Careful. </span>
+          <span class="fw-bold">If you want a change to be reverted or you want a column value to be reset to 'NULL', go into the SQL workbench in AWS.</span>
+        </p>
+      </div>
+
+      <div class="col p-3 mb-5" style="border: solid 2px lightblue; border-radius: 2vh;">
+        <h4 class="pb-2 text-white text-center">
+          Change Specific Satellite Data
+        </h4>
+
+        <div *ngIf="satelliteToChange==undefined">
+          <form #noradLookUp="ngForm" (ngSubmit)="findSat(noradLookUp)" novalidate>
+            <div class="text-white pb-2">Enter Norad Catalog ID</div>
+            <div class="input-group pb-3">
+              <button class="btn btn-outline-secondary" type="submit" style="background-color:#3f3f3f; border:solid lightblue 1px; ">Go</button>
+              <input type="text" class="form-control fw-bold"
+                     placeholder="Ex. 23212" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="norad" ngModel>
+            </div>
+          </form>
+        </div>
+        <div class="pb-3" *ngIf="satelliteToChange!=undefined">
+          <form #change="ngForm" (ngSubmit)="changeSat(change)" novalidate>
+            <div class="text-white pb-2">Satellite: <span class="fw-bold" style="color:lightblue;">{{satelliteToChange.NORAD_CAT_ID}}</span></div>
+            <div class="input-group pb-2 gap-2">
+              <input type="text" class="form-control fw-bold"
+                     placeholder="Company: {{satelliteToChange.Company}}" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="company" ngModel>
+              <input type="text" class="form-control fw-bold"
+                     placeholder="System: {{satelliteToChange.System}}" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="system" ngModel>
+              <input type="text" class="form-control fw-bold"
+                     placeholder="Sensor: {{satelliteToChange.Sensor}}" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="sensor" ngModel>
+              <input type="text" class="form-control fw-bold"
+                     placeholder="Orbit: {{satelliteToChange.ORBIT}}" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="orbit" ngModel>
+
+            </div>
+            <div class="row">
+              <div class="col text-start">
+                <button class="btn btn-outline-secondary mt-3 text-start" type="submit" style="background-color:#3f3f3f; border:solid lightblue 1px;">Submit</button>
+              </div>
+              <div class="col text-end">
+                <button class="btn btn-outline-secondary mt-3 text-end" (click)="resetSpecificSatellite()" style="background-color:#3f3f3f; border:solid lightblue 1px;">Back</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+    <div class="row">
+
+      <div class="col-3 p-3 text-white"></div>
+      <div class="col p-3 mb-5" style="border: solid 2px lightblue; border-radius: 2vh;">
+        <h4 class="pb-2 text-white text-center">
+          Change Satellite Data Per System 
+        </h4>
+
+        <div *ngIf="system==undefined">
+          <form #systemCheck="ngForm" (ngSubmit)="findSystem(systemCheck)" novalidate>
+            <div class="text-white pb-2">Enter System Name</div>
+            <div class="input-group pb-3">
+              <button class="btn btn-outline-secondary" type="submit" style="background-color:#3f3f3f; border:solid lightblue 1px; ">Go</button>
+              <input type="text" class="form-control fw-bold"
+                     placeholder="Ex. Corvus" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="system" ngModel>
+            </div>
+          </form>
+          <p class="text-white"  style="font-style:italic;">* Effects ALL satellites in specified system. </p>
+        </div>
+        <div class="pb-3" *ngIf="system!=undefined">
+          <form #changeSystem="ngForm" (ngSubmit)="changeSys(changeSystem)" novalidate>
+            <div class="text-white pb-2">System: <span class="fw-bold" style="color:lightblue;">{{systemDisplay}}</span><span style="color:lightblue;"></span></div>
+            <div class="input-group pb-2 gap-2">
+
+              <input type="text" class="form-control fw-bold"
+                     placeholder="Sensor " style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="sensor" ngModel>
+              <input type="text" class="form-control fw-bold"
+                     placeholder="Orbit " style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="orbit" ngModel>
+
+            </div>
+            <div class="row">
+              <div class="col text-start">
+                <button class="btn btn-outline-secondary mt-3 text-start" type="submit" style="background-color:#3f3f3f; border:solid lightblue 1px;">Submit</button>
+              </div>
+              <div class="col text-end">
+                <button class="btn btn-outline-secondary mt-3 text-end" (click)="resetSystem()" style="background-color:#3f3f3f; border:solid lightblue 1px;">Back</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+    <div class="row">
+      <div class="col-3 p-3 text-white">
+      </div>
+      <div class="col p-3" style="border: solid 2px lightblue; border-radius: 2vh;">
+        <h4 class="pb-2 text-white text-center">
+          Add Company, System, & Criteria
+        </h4>
+
+        <form #company="ngForm" (ngSubmit)="newCompany(company)" novalidate>
+          <div class=" pb-1">
+            <div class="text-white pb-2">Enter Company Name</div>
+            <input type="text" class="form-control fw-bold"
+                   placeholder="Ex. SpaceX" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="company" ngModel>
+
+            <div class="text-white pb-2 pt-3">Enter System Name</div>
+            <input type="text" class="form-control fw-bold"
+                   placeholder="Ex. Starlink" style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="system" ngModel>
+
+            <div class="text-white pb-2 pt-3">Enter Criteria</div>
+            <input type="text" class="form-control fw-bold"
+                   placeholder="Ex. 'Star' for Starlink satellites. " style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="criteria" ngModel>
+
+            <button class="btn btn-outline-secondary mt-3 text-start" type="submit" style="background-color:#3f3f3f; border:solid lightblue 1px;">Submit</button>
+
+
+
+          </div>
+        </form>
+        <p class="text-white pt-2" style="font-style:italic;">* If Company/System does not exist a new Company/System will be created. </p>
+        <p class="text-white pt-2" style="font-style:italic;">* Check Your Spelling </p>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </div>
+
+</div>

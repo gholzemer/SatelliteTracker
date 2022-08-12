@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Satellitedatabase'`, () => {
+  it(`should have as title 'testing-project'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Satellitedatabase');
+    expect(app.title).toEqual('testing-project');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('Satellitedatabase app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('testing-project app is running!');
   });
 });

@@ -1,0 +1,380 @@
+
+  <div class="p-4 scroll_enabled" style="background-color: #303030; min-height: 100vh;">
+    <div class="row" style="border-bottom:solid #dc3545 2px;">
+      <div class="col mb-2" style="max-width:78%;">
+        <div class="input-group">
+          <button class=" btn btn-sm btn-outline-secondary me-3" style="border:none; color:lightblue;" routerLink="/Home">
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>
+          </button>
+
+          <form #textForm="ngForm" (ngSubmit)="search(textForm)" novalidate>
+            <div class="input-group" style="min-width:450px;">
+              <button class="btn btn-outline-secondary" type="submit" style="background-color:#3f3f3f; border:solid lightblue 1px; color:lightblue;">Search</button>
+              <input type="text" class="form-control fw-bold" placeholder="Search by Name, System, or NORAD ID . . ." style="background-color:lightgray; color:#3f3f3f; border:solid 2px lightblue;" name="search" ngModel>
+            </div>
+          </form>
+
+          <div class="text-white mt-2 pt-1 ms-3" style="font-size:small;">
+            Showing <span class="fw-bold" style="color:lightblue;">{{satSize}}</span> satellites, <span class="fw-bold" style="color:lightblue;">
+              {{totalSystemCount}}
+            </span> systems, from <span class="fw-bold" style="color:lightblue;">{{totalCountryCount}}</span> Countries.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <div class="row">
+          <div class="col-4 nav mb-3">
+            <button (click)="reset();" class="btn btn-lg btn-outline-secondary" style="background-color:#3f3f3f; border:solid lightblue 1px; color:lightblue;">
+              Reset
+            </button>
+          </div>
+          <div class="col-4 nav justify-content-center mb-3">
+            <button class="btn btn-lg btn-outline-secondary"
+                    data-bs-toggle="modal" data-bs-target="#ModalONE"
+                    style="background-color:#3f3f3f; border:solid lightblue 1px; color:lightblue;">
+              Filters
+            </button>
+          </div>
+          <div class="col-4 nav justify-content-end mb-3">
+            <button data-bs-toggle="modal" data-bs-target="#ModalTWO" class="btn btn-lg btn-outline-secondary" style="background-color:#3f3f3f; border:solid lightblue 1px; color:lightblue;">
+              Export
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--modal-dialog-scrollable put next to modal-dialog for scrolling in modal body-->
+    <div class="modal fade text-white" id="ModalONE" data-bs-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content" style="background-color:#3d3d3d; border: solid 1px #dc3545;">
+          <div class="modal-header" style="border-bottom: solid 1px lightblue;">
+            <button type="button" class="ms-1 btn-close btn-sm btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="exampleModalLabel">All Satellite Sorting</h5>
+          </div>
+          <div class="modal-body fw-normal">
+            <div class="container">
+              <div class="row pb-2 text-center">
+
+                <div class="col">
+
+                  <div class="text-start ms-1 mb-3 pb-1" style="color:lightblue; border-bottom: solid 1px lightblue;">
+                    <span class="fw-bold">General</span>
+                  </div>
+
+                  <div class="border btn btn-md btn-outline-secondary me-2" (click)=IDSort()>
+                    <span class="fw-bold" style="color:lightblue;">ID </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                  </div>
+
+                  <div class="border btn btn-md btn-outline-secondary me-2" (click)=NameSort()>
+                    <span class="fw-bold" style="color:lightblue;">Name </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                  </div>
+
+                  <div class="border btn btn-md btn-outline-secondary me-2" (click)=LaunchSort()>
+                    <span class="fw-bold" style="color:lightblue;">Launch Date </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                  </div>
+
+                  <div class="border btn btn-md btn-outline-secondary " (click)=CountrySort()>
+                    <span class="fw-bold" style="color:lightblue;">Country </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-start ms-1 mt-2 mb-3 pb-1" style="color:lightblue; border-bottom: solid 1px lightblue;">
+                <span class="fw-bold">Orbital</span>
+              </div>
+
+
+              <div class="text-center pb-1">
+                <div class="mb-2"><span style="color:lightblue;" class="border-bottom pb-1 ps-4 pe-4">Orbit Realms</span></div>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[0][0]" (ngModelChange)="orbitalCategorySorting('LEO')" id="inlineCheckbox1" name="LEO">
+                  <label class="form-check-label" for="inlineCheckbox1">LEO</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[1][0]" (ngModelChange)="orbitalCategorySorting('MEO')" id="inlineCheckbox2" value="option2">
+                  <label class="form-check-label" for="inlineCheckbox2">MEO</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[2][0]" (ngModelChange)="orbitalCategorySorting('GEO')" id="inlineCheckbox3" value="option3">
+                  <label class="form-check-label" for="inlineCheckbox3">GEO</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[3][0]" (ngModelChange)="orbitalCategorySorting('HEO')" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">HEO</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[4][0]" (ngModelChange)="orbitalCategorySorting('SuperSync')" id="inlineCheckbox2" value="option2">
+                  <label class="form-check-label" for="inlineCheckbox2">Super Synchronous </label>
+                </div>
+              </div>
+              <div class="text-center pb-2">
+                <div class="mb-2"><span style="color:lightblue;" class="border-bottom pb-1 ps-4 pe-4">Special Orbits</span></div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[5][0]" (ngModelChange)="orbitalCategorySorting('Cir')" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">Circular</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[6][0]" (ngModelChange)="orbitalCategorySorting('Polar')" id="inlineCheckbox2" value="option2">
+                  <label class="form-check-label" for="inlineCheckbox2">Polar</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[7][0]" (ngModelChange)="orbitalCategorySorting('SSO')" id="inlineCheckbox3" value="option3">
+                  <label class="form-check-label" for="inlineCheckbox3">SSO</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[8][0]" (ngModelChange)="orbitalCategorySorting('Tundra')" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">Tundra</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="orbitRealmChecks[9][0]" (ngModelChange)="orbitalCategorySorting('Molniya')" id="inlineCheckbox2" value="option2">
+                  <label class="form-check-label" for="inlineCheckbox2">Molniya</label>
+                </div>
+              </div>
+
+
+              <form #orbitForm="ngForm" (ngSubmit)="minMaxSorting(orbitForm)" novalidate>
+                <div class="row text-start mb-2 mt-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=periapsisSort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Periapsis</span>
+                      <input type="text" placeholder="Min" style="background-color: lightgray;" class="form-control me-1" name="periapsisMin" ngModel>
+                      <input type="text" placeholder="Max" style="    background-color: lightgray;" class="form-control" name="periapsisMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-start mb-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=inclinationSort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Inclination</span>
+                      <input type="text" placeholder="Min" style="background-color:lightgray;" class="form-control me-1" name="inclinationMin" ngModel>
+                      <input type="text" placeholder="Max" style="background-color:lightgray;" class="form-control" name="inclinationMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-start mb-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=eccentricitySort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Eccentricity</span>
+                      <input type="text" placeholder="Min" style="background-color:lightgray;" class="form-control me-1" name="eccentricityMin" ngModel>
+                      <input type="text" placeholder="Max" style="background-color:lightgray;" class="form-control" name="eccentricityMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-start mb-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=semiMajorAxisSort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Semimajor Axis</span>
+                      <input type="text" placeholder="Min" style="background-color:lightgray;" class="form-control me-1" name="semimajorAxisMin" ngModel>
+                      <input type="text" placeholder="Max" style="background-color:lightgray;" class="form-control" name="semimajorAxisMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-start mb-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=apoapsisSort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Apoapsis</span>
+                      <input type="text" placeholder="Min" style="background-color:lightgray;" class="form-control me-1" name="apoapsisMin" ngModel>
+                      <input type="text" placeholder="Max" style="background-color:lightgray;" class="form-control" name="apoapsisMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-start mb-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=argOfPericenterSort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Arg of Pericenter</span>
+                      <input type="text" placeholder="Min" style="background-color:lightgray;" class="form-control me-1" name="argOfPericenterMin" ngModel>
+                      <input type="text" placeholder="Max" style="background-color:lightgray;" class="form-control" name="argOfPericenterMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-start mb-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=revAtEpochSort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Rev at Epoch</span>
+                      <input type="text" placeholder="Min" style="background-color:lightgray;" class="form-control me-1" name="revAtEpochMin" ngModel>
+                      <input type="text" placeholder="Max" style="background-color:lightgray;" class="form-control" name="revAtEpochMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-start mb-2 justify-content-start">
+                  <div class="col">
+                    <div class="input-group input-group-sm">
+                      <div class="btn btn-sm btn-outline-secondary text-white me-1" style="border:none;" (click)=meanAnomalySort()>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                      </div>
+                      <span class="input-group-text text-white fw-normal" style="width:16vh; background-color:#3d3d3d; border-color:lightblue;">Mean Anomaly</span>
+                      <input type="text" placeholder="Min" style="background-color:lightgray;" class="form-control me-1" name="meanAnomalyMin" ngModel>
+                      <input type="text" placeholder="Max" style="background-color:lightgray;" class="form-control" name="meanAnomalyMax" ngModel>
+                    </div>
+                  </div>
+                </div>
+                <div class="row text-end mb-1 mt-3 justify-content-end">
+                  <div class="col">
+                    <button type="submit" class="btn btn-outline-secondary">Sort</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade text-white" id="ModalTWO" data-bs-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color:#3d3d3d; border: solid 1px #dc3545;">
+          <div class="modal-header" style="border-bottom: solid 1px lightblue;">
+            <button type="button" class="ms-1 btn-close btn-sm btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title text-center" id="exampleModalLabel">
+              <div class="text-start text-white">
+                Export  <span class="fw-bold" style="color:lightblue;">{{satSize}}</span> satellites as
+              </div>
+            </h5>
+          </div>
+          <div class="modal-body fw-normal pb-4 mt-2">
+            <div class="container">
+              <div class="row pb-2 text-center">
+                <div class="col">
+
+                  <div class="border btn btn-md btn-outline-secondary me-2" (click)="download('csv')">
+                    <span class="fw-bold" style="color:lightblue;">CSV</span>
+                  </div>
+
+                  <div class="border btn btn-md btn-outline-secondary me-2" (click)="download('json')">
+                    <span class="fw-bold" style="color:lightblue;">JSON</span>
+                  </div>
+
+                  <div class="border btn btn-md btn-outline-secondary" (click)="download('text')">
+                    <span class="fw-bold" style="color:lightblue;">TXT</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row pb-2 mt-2 text-center">
+                <div class="col">
+                  <div class="border btn btn-md btn-outline-secondary me-2" (click)="download('stk')">
+                    <span class="fw-bold" style="color:lightblue;">STK Model</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pt-2" style="margin-bottom:-1vh;">
+      <h4 class="col fs-4 text-center p-2 pb-3 fw-bolder" style="color:lightblue; background-color: #303030;  border: solid 2px #808080;">Company</h4>
+      <h4 class="col fs-4 text-center p-2 pb-3 fw-bolder" style="color:lightblue; background-color: #303030;  border: solid 2px #808080;">Country</h4>
+      <h4 class="col fs-4 text-center p-2 pb-3 fw-bolder " style="color:lightblue; background-color: #303030; border: solid 2px #808080;">Systems</h4>
+      <h4 class="col fs-4 text-center p-2 pb-3 fw-bolder" style="color:lightblue; background-color: #303030;  border: solid 2px #808080;">Active Satellites</h4>
+    </div>
+
+    <div *ngFor="let s of companysOnPage">
+      <div *ngIf="s.System != null || (s.Company == 'Others' && s.COMMENT != '0')">
+
+        <app-accordion-category [data]="s" [fullSatData]="satOnPage">
+        </app-accordion-category>
+
+      </div>
+    </div>
+
+    <div *ngIf="satSize == 0">
+
+      <div class="row">
+        <div class="col-3">
+          <div class="text-start">
+            <div class="spinner-border text-danger fs-4 m-4" style="width: 4rem; height: 4rem;" role="status">
+            </div>
+          </div>
+        </div>
+        <div class="col m-5 fs-4 text-center text-white">No satellites match this criteria. Click 'Reset'</div>
+        <div class="col-3">
+          <div class="text-end">
+            <div class="spinner-border text-danger fs-4 m-4" style="width: 4rem; height: 4rem;" role="status">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row mt-3">
+      <div class="col nav justify-content-start">
+        <div class="border-bottom border-start "><a class="btn btn-outline-secondary text-white" style="border:none;" (click)=clickPrevious()>Previous</a></div>
+        <div class="border-bottom "><a class="btn btn-outline-secondary text-white" style="border:none;" (click)=click1()>1</a></div>
+        <div class="border-bottom "><a class="btn btn-outline-secondary text-white" style="border:none;" (click)=click2()>+10</a></div>
+        <div class="border-bottom "><a class="btn btn-outline-secondary text-white" style="border:none;" (click)=clickNext()>Next</a></div>
+        <div class="border-bottom border-end"><a class="btn btn-outline-secondary text-white" style="border:none;" (click)=clickLast()>Last</a></div>
+        <div><button class="btn btn-outline-secondary text-white" style="position:inherit; border:none;" disabled>Page {{DisplayPageNumber}} of {{displayNumberOfPages}}</button></div>
+      </div>
+      <div class="col nav justify-content-end">
+        <div *ngIf="globalVar==1">
+          <div class="btn btn-outline-secondary" (click)="createRouteToEdit()" style="border:none;">
+            Edit/Add System Criteria
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="text-white text-center mt-4">
+      <div>`Search` feature will always search everything in the database. It does not depend on what satellites are on the page.</div>
+      <div>`Filter` feature will sort / filter through what is displayed on the page.</div>
+      <div>Exporting to STK sends a file to your C:\temp\ location for MATLAB to read.</div>
+    </footer>
+  </div>
+
+
+

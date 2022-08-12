@@ -1,0 +1,80 @@
+
+
+<div class="accoridon pt-2" [id]="'heading'+data.NORAD_CAT_ID">
+  <div class="accordion-item row">
+    <h4 class="accordion-header col fs-5 p-2 text-center pb-3 text-white" style="background-color:#3d3d3d; border:solid 1px #808080;">
+      <div class="row">
+        <div class="col-1">
+          <a class="btn-secondary pe-4 link" role="button" style="margin-top:.5vh; border-radius:5%;"
+             [href]="'#collapse'+data.NORAD_CAT_ID" [attr.aria-controls]="'collapse'+data.NORAD_CAT_ID"
+             data-bs-toggle="collapse"
+             aria-expanded="true" aria-controls="collapseOne">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </a>
+        </div>
+        <div class="col"><span class="text-white">
+           <div *ngIf="data.Company == undefined">
+            <div class="spinner-border text-danger" role="status">
+            <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          {{data.Company}}
+           </span></div>
+      </div>
+    </h4>
+    <h4 class="accordion-header col fs-5 p-2 text-center pb-3 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;">
+      <div *ngIf="data.COUNTRY_CODE == undefined">
+        <div class="spinner-border text-danger" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      {{data.COUNTRY_CODE}}
+    </h4>
+    <h4 class="accordion-header col fs-5 p-2 text-center pb-3 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;">
+      <div *ngIf="data.CENTER_NAME == undefined">
+        <div class="spinner-border text-danger" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      {{data.CENTER_NAME}}
+    </h4>
+    <h4 class="accordion-header col fs-5 p-2 text-center pb-3 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;">
+      <div *ngIf="data.COMMENT == undefined">
+        <div class="spinner-border text-danger" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      {{data.COMMENT}}
+    </h4>
+
+    <div [id]="'collapse'+data.NORAD_CAT_ID" class="accordion-collapse collapse"
+         s
+         aria-labelledby="headingOne"
+         [attr.aria-labelledby]="'heading'+data.NORAD_CAT_ID">
+      <div class="accordion-body text-white ms-1" style="border-left: dashed 1px lightblue;">
+        <!-- acordion 2 start -->
+         <div class="row ms-2 mt-2">
+           <h4 class="col fs-5 p-2 text-center" style="color: lightblue; background-color: #303030; border:solid 1px #808080;">System</h4>
+           <h4 class="col fs-5 p-2 text-center" style="color: lightblue; background-color: #303030; border:solid 1px #808080;">Active Satellites</h4>
+           <h4 class="col fs-5 p-2 text-center" style="color: lightblue; background-color: #303030; border:solid 1px #808080;">Additional Planned Satellites</h4>
+           <h4 class="col fs-5 p-2 text-center" style="color: lightblue; background-color: #303030; border:solid 1px #808080;">Mission Type</h4>
+         </div>
+        <div *ngIf="data.Company != 'Others'">
+          <div *ngFor="let s of systemArray">
+            <app-system-accodion [fullSatData]="fullSatData" [data]="data" [system]="s"></app-system-accodion>
+          </div>
+        </div>
+
+        <div *ngIf="data.Company == 'Others'">
+          <app-system-accodion [fullSatData]="fullSatData" [data]="data" [system]="'Others'"></app-system-accodion>
+        </div>
+        <!-- acordion 2 end -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--#636363 maybe for alternating colors-->

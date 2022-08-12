@@ -1,0 +1,14 @@
+
+th, td {
+  padding-right: 15px;
+  padding-left: 15px;
+  font-size:smaller;
+}
+
+.link {
+  color: lightblue;
+}
+
+.link:hover{
+    color:gray;
+}

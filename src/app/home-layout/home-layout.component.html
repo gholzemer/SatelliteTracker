@@ -1,0 +1,89 @@
+<!--
+More accordion style rather than a traditional collapse for the summary sorting menu background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Raytheon_Technologies_logo.svg/2560px-Raytheon_Technologies_logo.svg.png');
+-->
+<div class="p-1 scroll_enabled" style="background-color: #303030; min-height:100vh; overflow-x:hidden;">
+  <div class="container-fluid" style="">
+    <div class="row mt-5">
+      <div class="col text-start ps-5">
+        <img src=".//assets//images//rtxLOGO2.png" style="height: 8vh;" />
+      </div>
+      <div class="col text-end">
+       <h1 class="fw-bolder pe-5" style="color:#dc3545;">MSA <img class="ms-4" src=".//assets//images//satelliteLogo.ico" style="height: 7vh;" /></h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="mt-2">
+        <div class="text-center pb-1" style="min-height:45vh; background-color: #303030; border-bottom: solid 2px #808080;">
+          <div class="fw-bolder" style="color:lightblue; font-size:60px;">
+            Summary
+            <span class="text-white btn btn-outline-secondary btn-sm ms-4" routerLink="/Satellite-Details"> Show More</span>
+          </div>
+          <div class="fw-bolder text-white" style="font-size:25px;">
+            Showing
+            <span *ngIf="satSize != 0"><span style="color:lightblue;">{{satSize}} </span></span>
+            <span *ngIf="satSize == 0">
+              <span class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </span>
+            </span>
+            satellites,
+            <span *ngIf="totalSystemCount != 0"><span style="color: lightblue;">{{totalSystemCount}}</span></span>
+            <span *ngIf="totalSystemCount == 0">
+              <span style="color: lightblue;">
+                <span class="spinner-border text-danger" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </span>
+            </span>
+            systems, from
+            <span *ngIf="totalCountryCount != 0"><span style="color: lightblue;">{{totalCountryCount}}</span></span>
+            <span *ngIf="totalCountryCount == 0">
+              <span style="color: lightblue;">
+                <span class="spinner-border text-danger" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </span>
+            </span>
+            Countries.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="row border-1 p-1" style="background-color: #303030;">
+    <h4 class="col-2 fs-5  text-center pb-1 fw-bolder" style="color:lightblue; background-color:  #303030; border: solid 1px #808080">Company</h4>
+    <h4 class="col fs-5 text-center pb-1 fw-bolder" style="color:lightblue; background-color:  #303030; border: solid 1px #808080">System</h4>
+    <h4 class="col-1 fs-5  text-center pb-1 fw-bolder" style="color:lightblue; background-color:  #303030; border: solid 1px #808080">ID</h4>
+    <h4 class="col-2 fs-5  text-center pb-1 fw-bolder" style="color:lightblue; background-color:  #303030; border: solid 1px #808080">Name</h4>
+    <h4 class="col-2 fs-5  text-center pb-1 fw-bolder" style="color: lightblue;background-color:  #303030; border: solid 1px #808080">Orbit</h4>
+    <h4 class="col-md fs-5 text-center pb-1 fw-bolder" style="color: lightblue; background-color: #303030; border: solid 1px #808080">Launch Date</h4>
+    <h4 class="col-md  fs-5 text-center pb-1 fw-bolder" style="color:lightblue; background-color:  #303030; border: solid 1px #808080">Country</h4>
+    <h4 class="col-md fs-5  text-center pb-1 fw-bolder" style="color:lightblue; background-color:  #303030; border: solid 1px #808080">Update</h4>
+
+    <div *ngIf="tooUpdateUndefinedCheck == 0" class="text-center" style="min-height:34vh;">
+      <div class="fs-4 fw-bolder pt-4" style="color:lightgreen;">Main database is up to date</div>
+    </div>
+    <div *ngIf="tooUpdate != undefined">
+      <div *ngFor="let s of tooUpdate | slice:0:10; let i=index">
+        <app-FullDataCard [data]="s"></app-FullDataCard>
+      </div>
+    </div>
+    
+
+    <button class="col btn-sm fs-6 text-center text-white mt-2"
+            style="border: solid 1px lightgreen; background-color: #303030;"
+            routerLink="/ManualUpdate">
+      Show More
+    </button>
+    <button class="col fs-6 text-center text-white mt-2"
+            style="border: solid 1px #808080; background-color: #303030;" disabled>
+      Update functionality disabled on landing page. Click 'Show More'.
+    </button>
+
+  </div>
+  </div>
+</div>
+
+
+
+

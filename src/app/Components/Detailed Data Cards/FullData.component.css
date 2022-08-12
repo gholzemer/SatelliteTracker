@@ -1,0 +1,13 @@
+
+.label{
+    color:lightblue;
+}
+
+.link {
+  color: lightblue;
+}
+
+  .link:hover {
+    color: gray;
+  }
+

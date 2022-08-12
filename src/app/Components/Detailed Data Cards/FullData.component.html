@@ -1,0 +1,140 @@
+
+
+<div class="accoridon pt-2" [id]="'heading'+data.NORAD_CAT_ID">
+  <div class="accordion-item row">
+    <h4 class="accordion-header col-2 fs-6  text-center pb-1 text-white" style="background-color:#3d3d3d; border:solid 1px #808080;">
+      <div class="row">
+        <div class="col-1">
+          <a class="btn-secondary pe-4 link" role="button" style="margin-top:.5vh; border-radius:5%;"
+             [href]="'#collapse'+data.NORAD_CAT_ID" [attr.aria-controls]="'collapse'+data.NORAD_CAT_ID"
+             data-bs-toggle="collapse"
+             aria-expanded="true" aria-controls="collapseOne">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </a>
+        </div>
+        <div class="col"><span class="text-white">{{data.Company}}</span></div>
+      </div>
+    </h4>
+    <h4 class="accordion-header col-md fs-6  text-center pb-1 text-white" style="background-color:#3d3d3d; border:solid 1px #808080;">{{data.System}}</h4>
+    <h4 class="accordion-header col-1 fs-6  text-center pb-1 text-white" style="background-color:#3d3d3d; border:solid 1px #808080;">{{data.NORAD_CAT_ID}}</h4>
+    <h4 class="accordion-header col-2 fs-6  text-center pb-1 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;">{{data.OBJECT_NAME}}</h4>
+    <h4 class="accordion-header col-2 fs-6  text-center pb-1 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;">
+      {{data.ORBIT}}
+    </h4>
+    <h4 class="accordion-header col-md fs-6  text-center pb-1 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;">{{data.LAUNCH_DATE}}</h4>
+    <h4 class="accordion-header col-md fs-6  text-center pb-1 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;">{{data.COUNTRY_CODE}}</h4>
+    <h4 class="accordion-header col-md fs-6  text-center pb-1 text-white" style="background-color: #3d3d3d; border:solid 1px #808080;">
+      <span *ngIf="data.ELEMENT_SET_NO == '999'">
+        <input class="form-check-input" (click)="updateOnClick()" type="checkbox" value="" id="flexCheckDefault">
+      </span>
+      <span *ngIf="data.ELEMENT_SET_NO != '999'">
+        <input class="form-check-input" (click)="updateOnClick()" type="checkbox" value="" id="flexCheckDefault" checked>
+      </span>
+    </h4>
+    <div [id]="'collapse'+data.NORAD_CAT_ID" class="accordion-collapse collapse"
+         style="border-bottom:solid 1px #808080; border-right:solid 1px #808080; border-left:solid 1px #808080;"
+         aria-labelledby="headingOne"
+         [attr.aria-labelledby]="'heading'+data.NORAD_CAT_ID">
+      <div class="accordion-body text-white">
+        <table class="mt-2">
+          <th style="color:lightblue;">Periapsis </th>
+          <th style="color:lightblue;">Inclination </th>
+          <th style="color:lightblue;">Eccentricity </th>
+          <th style="color:lightblue;">Semimajor Axis</th>
+          <th style="color:lightblue;">Apoapsis </th>
+          <th style="color:lightblue;">Arg Of Pericenter </th>
+          <th style="color:lightblue;">Rev at EPOCH </th>
+          <th style="color:lightblue;">Mean Anomaly </th>
+          <th style="color:lightblue;">RA of Ascending Node</th>
+
+          <tr>
+            <td class="pb-3">{{data.PERIAPSIS}}</td>
+            <td class="pb-3">{{data.INCLINATION}}</td>
+            <td class="pb-3">{{data.ECCENTRICITY}}</td>
+            <td class="pb-3">{{data.SEMIMAJOR_AXIS}}</td>
+            <td class="pb-3">{{data.APOAPSIS}}</td>
+            <td class="pb-3">{{data.ARG_OF_PERICENTER}}</td>
+            <td class="pb-3">{{data.REV_AT_EPOCH}}</td>
+            <td class="pb-3">{{data.MEAN_ANOMALY}}</td>
+            <td class="pb-3">{{data.RA_OF_ASC_NODE}}</td>
+          </tr>
+
+          <th style="color:lightblue;">Time System </th>
+          <th style="color:lightblue;">Element Set No</th>
+          <th style="color:lightblue;">GP ID </th>
+          <th style="color:lightblue;">Ephemeris Type </th>
+          <th style="color:lightblue;">RCS Size</th>
+          <th style="color:lightblue;">Object Name </th>
+          <th style="color:lightblue;">Ref Frame </th>
+          <th style="color:lightblue;">Country Code </th>
+          <th style="color:lightblue;">Object Type </th>
+
+          <tr>
+            <td class="pb-3">{{data.TIME_SYSTEM}}</td>
+            <td class="pb-3">{{data.ELEMENT_SET_NO}}</td>
+            <td class="pb-3">{{data.GP_ID}}</td>
+            <td class="pb-3">{{data.EPHEMERIS_TYPE}}</td>
+            <td class="pb-3">{{data.RCS_SIZE}}</td>
+            <td class="pb-3">{{data.OBJECT_NAME}}</td>
+            <td class="pb-3">{{data.REF_FRAME}}</td>
+            <td class="pb-3">{{data.COUNTRY_CODE}}</td>
+            <td class="pb-3">{{data.OBJECT_TYPE}}</td>
+          </tr>
+
+          <th style="color:lightblue;">Decay Date </th>
+          <th style="color:lightblue;">Originator </th>
+          <th style="color:lightblue;">Mean Motion Dot </th>
+          <th style="color:lightblue;">Launch Date </th>
+          <th style="color:lightblue;">Classification Type </th>
+          <th style="color:lightblue;">Mean Motion </th>
+          <th style="color:lightblue;">Mean Motion DDOT </th>
+          <th style="color:lightblue;">Period </th>
+          <th style="color:lightblue;">Creation Date </th>
+
+          <tr>
+            <td class="pb-3">{{data.DECAY_DATE}}</td>
+            <td class="pb-3">{{data.ORIGINATOR}}</td>
+            <td class="pb-3">{{data.MEAN_MOTION_DOT}}</td>
+            <td class="pb-3">{{data.LAUNCH_DATE}}</td>
+            <td class="pb-3">{{data.CLASSIFICATION_TYPE}}</td>
+            <td class="pb-3">{{data.MEAN_MOTION}}</td>
+            <td class="pb-3">{{data.MEAN_MOTION_DDOT}}</td>
+            <td class="pb-3">{{data.PERIOD}}</td>
+            <td class="pb-3">{{data.CREATION_DATE}}</td>
+          </tr>
+
+          <th style="color:lightblue;">File</th>
+          <th style="color:lightblue;">EPOCH </th>
+          <th style="color:lightblue;">Mean Element Theory </th>
+          <th style="color:lightblue;">Site </th>
+          <th style="color:lightblue;">BSTAR </th>
+          <th style="color:lightblue;">Norad Cat ID </th>
+          <th style="color:lightblue;">Center name </th>
+          <th style="color:lightblue;">TLE Line 0</th>
+          <th style="color:lightblue;">CCSDS OMM VERS </th>
+          <tr>
+            <td class="pb-3">{{data.FILE}}</td>
+            <td class="pb-3" style="font-size:x-small">{{data.EPOCH}}</td>
+            <td class="pb-3">{{data.MEAN_ELEMENT_THEORY}}</td>
+            <td class="pb-3">{{data.SITE}}</td>
+            <td class="pb-3">{{data.BSTAR}}</td>
+            <td class="pb-3">{{data.NORAD_CAT_ID}}</td>
+            <td class="pb-3">{{data.CENTER_NAME}}</td>
+            <td class="pb-3">{{data.TLE_LINE0}}</td>
+            <td class="pb-3">{{data.CCSDS_OMM_VERS}}</td>
+          </tr>
+        </table>
+        <div class="ps-3" style="font-size: smaller;"><span class="fw-bold" style="color:lightblue;">TLE_LINE2:</span> {{data.TLE_LINE2}}</div>
+        <div class="ps-3 pb-4" style="font-size:smaller;"><span class="fw-bold" style="color:lightblue;">TLE_LINE1:</span> {{data.TLE_LINE1}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--#636363 maybe for alternating colors-->
